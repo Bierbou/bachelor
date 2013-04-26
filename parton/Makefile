@@ -34,7 +34,7 @@ ECHO         = echo
 CINT         = /usr/local/bin/rootcint
 
 # add ROOT flags
-CXXFLAGS    += $(ROOTCFLAGS) -I/storage/Programs/CUBA/3.0
+CXXFLAGS    += $(ROOTCFLAGS) -I/storage/Programs/CUBA/3.0 -std=c++0x
 
 # ----------------------------------------------------------------------
 # The following definitions depend on the setup of the system where
