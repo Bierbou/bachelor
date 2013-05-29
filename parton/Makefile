@@ -20,10 +20,10 @@ ROOTLIBS     := -lMinuit $(shell root-config --libs)
 #ROOTLIBS     += -lRooFitCore -lRooFit -lRooStats -lFoam -lMathMore
 
 # compiler and flags
-CXX          = g++-4.4
+CXX          = g++
 CXXFLAGS     =  -g -Wall -fPIC -Wno-deprecated -O2
 LD           = /usr/bin/ld
-LDFLAGS      =  -fopenmp -L/storage/Programs/CUBA/3.0 -g -O2
+LDFLAGS      =  -fopenmp -g -O2
 LDFLAGS += -fopenmp
 SOFLAGS      = -shared
 
@@ -34,7 +34,7 @@ ECHO         = echo
 CINT         = /usr/local/bin/rootcint
 
 # add ROOT flags
-CXXFLAGS    += $(ROOTCFLAGS) -I/storage/Programs/CUBA/3.0 -std=c++0x
+CXXFLAGS    += $(ROOTCFLAGS) 
 
 # ----------------------------------------------------------------------
 # The following definitions depend on the setup of the system where
@@ -44,8 +44,6 @@ CXXFLAGS    += $(ROOTCFLAGS) -I/storage/Programs/CUBA/3.0 -std=c++0x
 # and the compilation will work
 CXXFLAGS    += -I. -I./include -I$(BATINSTALLDIR)/include
 LIBS        += -L$(BATINSTALLDIR)/lib -lBATmodels -lBATmtf -lBAT $(ROOTLIBS)
-
-LIBS        += -L/storage/Programs/CUBA/3.0 -lcuba
 
 # List of all classes (models) used in the program
 # Add classes to the end. Backslash indicates continuation

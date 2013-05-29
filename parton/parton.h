@@ -28,6 +28,9 @@ class parton : public BCModel
       double LogLikelihood(const std::vector<double> &parameters);
       // void MCMCIterationInterface();
 };
+
+void draw_random(std::vector<double> & random_numbers, unsigned power);
+void plot(const std::vector<double> & random_numbers, unsigned count);
 // ---------------------------------------------------------
 
 #endif

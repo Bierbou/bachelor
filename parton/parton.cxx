@@ -1,82 +1,52 @@
-// ***************************************************************
-// This file was created using the CreateProject.sh script.
-// CreateProject.sh is part of Bayesian Analysis Toolkit (BAT).
-// BAT can be downloaded from http://www.mppmu.mpg.de/bat
-// ***************************************************************
+#include <TCanvas.h>
+#include <TH1.h>
+#include <TRandom3.h>
 
-#include "parton.h"
+#include <cmath>
+#include <cstdlib>
+#include <vector>
 
-#include <BAT/BCMath.h>
+using namespace std;
 
-// ---------------------------------------------------------
-parton::parton() : BCModel()
+/**
+ * Draw random according to (1-x)^n
+ *
+ * @param storage Size determines number of random numbers.
+ * @param power The exponent n.
+ */
+void draw_random(vector<double> & random_numbers, unsigned power)
 {
-   // default constructor
-   DefineParameters();
+  TRandom3 rng;
+  rng.SetSeed(657767645); 
+  for(size_t i = 0; i < random_numbers.size() ; ++i)
+    {
+      // inverse transform
+      random_numbers[i] = 1 - exp(log(rng.Rndm()) / (power + 1));
+    }
 }
 
-// ---------------------------------------------------------
-parton::parton(const char * name) : BCModel(name)
+TH1D histogram_factory(const vector<double> & random_numbers, double min, double max, unsigned nbins)
 {
-   // constructor
-   DefineParameters();
+  // name, title, equal-sized bins
+  TH1D histo(TString::Format("Markus' first histo %u", nbins), "Distribution", nbins, min, max);
+  for(size_t i = 0; i < random_numbers.size() ; ++i)
+    {
+      histo.Fill(random_numbers[i]);
+    }
+  histo.Scale(1.0 / histo.Integral() / histo.GetBinWidth(1));
+  return histo;
 }
 
-// ---------------------------------------------------------
-parton::~parton()
-   // default destructor
+// todo document
+void plot(const vector<double> & random_numbers, unsigned count)
 {
+  static const double min = 0;
+  static const double max = 1;
+
+  // name is c1, empty title, width, height in pixels
+  TCanvas canvas("c1","", 800, 400);
+
+  histogram_factory(random_numbers, min, max, count).Draw();
+
+  canvas.Print("rn.pdf");
 }
-
-// ---------------------------------------------------------
-void parton::DefineParameters()
-{
-   // Add parameters to your model here.
-   // You can then use them in the methods below by calling the
-   // parameters.at(i) or parameters[i], where i is the index
-   // of the parameter. The indices increase from 0 according to the
-   // order of adding the parameters.
-
-//   AddParameter("x", -10.0, 10.0); // index 0
-//   AddParameter("y",  -5.0,  5.0); // index 1
-}
-
-// ---------------------------------------------------------
-double parton::LogLikelihood(const std::vector<double> &parameters)
-{
-   // This methods returns the logarithm of the conditional probability
-   // p(data|parameters). This is where you have to define your model.
-
-   double logprob = 0.;
-
-//   double x = parameters.at(0);
-//   double y = parameters.at(1);
-//   double eps = 0.5;
-
-   // Breit-Wigner distribution of x with nuisance parameter y
-//   logprob += BCMath::LogBreitWignerNonRel(x + eps*y, 0.0, 1.0);
-
-
-   return logprob;
-}
-
-// ---------------------------------------------------------
-double parton::LogAPrioriProbability(const std::vector<double> &parameters)
-{
-   // This method returns the logarithm of the prior probability for the
-   // parameters p(parameters).
-
-   double logprob = 0.;
-
-//   double x = parameters.at(0);
-//   double y = parameters.at(1);
-
-//   double dx = GetParameter(0)->GetRangeWidth();
-
-//   logprob += log(1./dx);                    // flat prior for x
-//   logprob += BCMath::LogGaus(y, 0., 1.0);   // Gaussian prior for y
-
-   return logprob;
-}
-// ---------------------------------------------------------
-
