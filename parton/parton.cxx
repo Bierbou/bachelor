@@ -17,7 +17,7 @@ using namespace std;
 void draw_random(vector<double> & random_numbers, unsigned power)
 {
   TRandom3 rng;
-  rng.SetSeed(657767645); 
+  rng.SetSeed(657767645);
   for(size_t i = 0; i < random_numbers.size() ; ++i)
     {
       // inverse transform
@@ -46,7 +46,8 @@ void plot(const vector<double> & random_numbers, unsigned count)
   // name is c1, empty title, width, height in pixels
   TCanvas canvas("c1","", 800, 400);
 
-  histogram_factory(random_numbers, min, max, count).Draw();
+  TH1D h = histogram_factory(random_numbers, min, max, count);
+  h.Draw();
 
   canvas.Print("rn.pdf");
 }
