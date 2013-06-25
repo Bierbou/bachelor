@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 { 
-  static const unsigned N = 1000;
+  static const unsigned N = 10000;
   unsigned power;
   unsigned count;
   cout<<"Program for whatever"<<endl;
