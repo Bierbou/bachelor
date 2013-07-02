@@ -21,17 +21,15 @@ int main()
   draw_random(random_numbers, power);
   plot(random_numbers, count);
 
-  return 0;
-#if 0
   string name;
-  cout<<"Output filename"<<endl;
-  cin>>name;
+  cout<< "input filename"<<endl;
+  cin>> name;
   ofstream ofs(name.c_str());
   if(!ofs) cout<<"can't write file\n";
-  ofs<< "Histogrambins\t"<<endl;
-  //for(size_t i=0; i< histos.size(); ++i) 
-    ofs<<"  "<<histo<<endl;
+  ofs<< "Transverse rn\t"<<endl;
+  for(size_t i=0; i< random_numbers.size(); ++i) 
+    ofs<<"  "<<random_numbers[i]<<endl;
   ofs.close();
-#endif
+  return 0;
 }
 
