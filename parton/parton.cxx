@@ -1,6 +1,8 @@
+#include "parton.h"
+
 #include <TCanvas.h>
-#include <TH1.h>
 #include <TRandom3.h>
+#include <TH1D.h>
 
 #include <cmath>
 #include <cstdlib>
@@ -12,7 +14,7 @@ using namespace std;
  * Draw random according to (1-x)^n
  *
  * @param storage Size determines number of random numbers.
- * @param power The exponent n.
+ * @param power The exponent n
  */
 void draw_random(vector<double> & random_numbers, unsigned power)
 {
@@ -28,7 +30,7 @@ void draw_random(vector<double> & random_numbers, unsigned power)
 TH1D histogram_factory(const vector<double> & random_numbers, double min, double max, unsigned nbins)
 {
   // name, title, equal-sized bins
-  TH1D histo(TString::Format("Markus' first histo %u", nbins), "Distribution", nbins, min, max);
+  TH1D histo("h1", TString::Format("Markus' first histo %u", nbins), nbins, min, max);
   for(size_t i = 0; i < random_numbers.size() ; ++i)
     {
       histo.Fill(random_numbers[i]);
@@ -50,4 +52,6 @@ void plot(const vector<double> & random_numbers, unsigned count)
   h.Draw();
 
   canvas.Print("rn.pdf");
+  // canvas.Print("rn.root");
+  h.SaveAs("rn.root","RECREATE");
 }

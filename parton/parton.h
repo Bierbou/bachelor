@@ -9,6 +9,7 @@
 
 #include <BAT/BCModel.h>
 
+#include <TH1.h>
 // This is a parton header file.
 // Model source code is located in file parton/parton.cxx
 
@@ -30,7 +31,9 @@ class parton : public BCModel
 };
 
 void draw_random(std::vector<double> & random_numbers, unsigned power);
+TH1D histogram_factory(const std::vector<double> & random_numbers, double min, double max, unsigned nbins);
 void plot(const std::vector<double> & random_numbers, unsigned count);
+
 // ---------------------------------------------------------
 
 #endif
